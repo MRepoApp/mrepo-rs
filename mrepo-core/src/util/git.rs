@@ -1,9 +1,11 @@
-use std::{env, fs};
 use std::path::Path;
+use std::{env, fs};
+
 use chrono::{DateTime, Utc};
 use git2::build::RepoBuilder;
 use git2::{Cred, FetchOptions, RemoteCallbacks, Repository};
 use once_cell::sync::Lazy;
+
 use crate::constant;
 
 pub struct Git;

@@ -4,8 +4,8 @@ use std::io::Write;
 use std::path::Path;
 
 use chrono::{DateTime, Utc};
-use reqwest::{Response, StatusCode};
 use reqwest::header::{HeaderMap, LAST_MODIFIED};
+use reqwest::{Response, StatusCode};
 
 use crate::util::Json;
 

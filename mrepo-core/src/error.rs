@@ -1,5 +1,5 @@
-use std::{fmt, io, result};
 use std::fmt::{Debug, Display};
+use std::{fmt, io, result};
 
 pub struct Error {
     err: Box<ErrorImpl>,

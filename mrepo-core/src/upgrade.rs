@@ -9,8 +9,8 @@ use mrepo_model::config::{Module, Repository};
 use mrepo_model::modules;
 use mrepo_model::track::{Track, Version};
 
-use crate::{constant, Context};
 use crate::util::{FileUtil, Json};
+use crate::{constant, Context};
 
 pub struct Upgrade {
     repository: Repository,

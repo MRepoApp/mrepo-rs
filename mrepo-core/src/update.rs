@@ -13,8 +13,8 @@ use mrepo_model::origin::UpdateJson;
 use mrepo_model::track::{Track, Version};
 
 use crate::constant;
-use crate::Context;
 use crate::util::{FileUtil, Json, LocalModule, Request, StrUtil};
+use crate::Context;
 
 pub struct Update {
     setting: RepositorySetting,

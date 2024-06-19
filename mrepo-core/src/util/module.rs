@@ -4,8 +4,8 @@ use std::io::{Read, Write};
 use std::path::Path;
 
 use walkdir::WalkDir;
-use zip::{CompressionMethod, ZipArchive};
 use zip::write::SimpleFileOptions;
+use zip::{CompressionMethod, ZipArchive};
 
 use mrepo_model::origin::Module;
 

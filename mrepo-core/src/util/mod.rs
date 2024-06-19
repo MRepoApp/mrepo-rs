@@ -16,11 +16,11 @@ use crate::error;
 use crate::error::Error;
 
 mod file;
-pub mod str;
-mod request;
-mod module;
 #[cfg(feature = "git")]
 mod git;
+mod module;
+mod request;
+mod str;
 
 pub trait Json: Sized {
     fn from_file<P: AsRef<Path>>(p: P) -> error::Result<Self>;
