@@ -1,7 +1,8 @@
-use std::path::PathBuf;
 use std::env;
+use std::path::PathBuf;
 
 use clap::Parser;
+
 use mrepo_cli::{Args, Commands};
 use mrepo_core::ContextWrapper;
 
@@ -15,9 +16,9 @@ fn get_working_dir(args: &Args) -> Option<PathBuf> {
 
 #[cfg(feature = "git")]
 fn set_ssh_key(key: Option<String>) {
-    use std::fs;
     use mrepo_core::constant;
-    
+    use std::fs;
+
     if env::var(constant::SSH_PRIVATE_KEY).is_ok() {
         return;
     }
@@ -59,7 +60,7 @@ async fn main() {
     };
 
     let _logger: Option<_> = if !args.quiet {
-        Some(context.logger(mrepo_log::init_tracing))
+        context.logger(mrepo_log::init_tracing)
     } else {
         None
     };

@@ -2,61 +2,48 @@ use std::path::Path;
 use std::str::FromStr;
 
 use tracing::Level;
-use tracing_appender::non_blocking::WorkerGuard;
+use tracing_appender::non_blocking::{NonBlocking, WorkerGuard};
 
 use mrepo_model::config::Log;
 
-pub struct Logger<T> {
-    _guard: Option<T>,
-}
-
-impl<T> Logger<T> {
-    pub fn new(guard: Option<T>) -> Self {
-        Self { _guard: guard }
-    }
-}
-
-impl Logger<WorkerGuard> {
-    pub fn init_tracing(log: &Log) -> Self {
-        if log.disabled {
-            return Logger::new(None);
-        }
-
-        let level = Level::from_str(&log.level).unwrap_or(Level::INFO);
-        let subscriber = tracing_subscriber::fmt()
-            .with_max_level(level)
-            .with_target(true);
-
-        let guard = if log.output.is_empty() {
-            let subscriber = subscriber.with_ansi(true);
-            if log.timestamp {
-                subscriber.init()
+pub fn init_tracing(log: &Log) -> Option<WorkerGuard> {
+    macro_rules! init {
+        ($log:expr, $subscriber:expr) => {
+            if $log.timestamp {
+                $subscriber.init()
             } else {
-                subscriber.without_time().init()
+                $subscriber.without_time().init()
             }
-
-            None
-        } else {
-            let path = Path::new(&log.output);
-            let log_dir = path.parent().unwrap();
-            let file_name = path.file_name().unwrap();
-
-            let file_appender = tracing_appender::rolling::never(log_dir, file_name);
-            let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
-            let subscriber = subscriber.with_ansi(false).with_writer(non_blocking);
-            if log.timestamp {
-                subscriber.init()
-            } else {
-                subscriber.without_time().init()
-            }
-
-            Some(guard)
         };
-
-        Self::new(guard)
     }
-}
 
-pub fn init_tracing(log: &Log) -> Logger<WorkerGuard> {
-    Logger::init_tracing(log)
+    fn non_blocking(path: &Path) -> Option<(NonBlocking, WorkerGuard)> {
+        let log_dir = path.parent()?;
+        let file_name = path.file_name()?;
+
+        let file_appender = tracing_appender::rolling::never(log_dir, file_name);
+        Some(tracing_appender::non_blocking(file_appender))
+    }
+
+    let level = Level::from_str(&log.level).unwrap_or(Level::INFO);
+    let subscriber = tracing_subscriber::fmt()
+        .with_max_level(level)
+        .with_target(true);
+
+    if log.output.is_empty() {
+        let subscriber = subscriber.with_ansi(true);
+        init!(log, subscriber);
+        None
+    } else {
+        let path = Path::new(&log.output);
+        if let Some((log_file, guard)) = non_blocking(path) {
+            let subscriber = subscriber.with_ansi(false).with_writer(log_file);
+            init!(log, subscriber);
+            Some(guard)
+        } else {
+            let subscriber = subscriber.with_ansi(true);
+            init!(log, subscriber);
+            None
+        }
+    }
 }
