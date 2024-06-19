@@ -1,0 +1,12 @@
+[package]
+name = "mrepo-log"
+version = "0.1.0"
+license.workspace = true
+edition.workspace = true
+
+[dependencies]
+mrepo-model = { path = "../mrepo-model" }
+
+tracing = { version = "0.1", default-features = false }
+tracing-appender = "0.2"
+tracing-subscriber = "0.3"

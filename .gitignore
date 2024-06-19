@@ -1,0 +1,12 @@
+# Cargo
+target/
+
+# IntelliJ
+*.iml
+.idea/
+
+# Local
+*.json
+
+# MacOS
+.DS_Store

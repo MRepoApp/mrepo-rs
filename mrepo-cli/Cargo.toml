@@ -1,0 +1,20 @@
+[package]
+name = "mrepo-cli"
+version = "0.1.0"
+license.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "mrepo"
+path = "src/bin/mrepo.rs"
+
+[dependencies]
+mrepo-core = { path = "../mrepo-core" }
+mrepo-log = { path = "../mrepo-log" }
+
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+[features]
+default = []
+git = ["mrepo-core/git"]

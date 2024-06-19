@@ -1,0 +1,26 @@
+[package]
+name = "mrepo-core"
+version = "0.1.0"
+license.workspace = true
+edition.workspace = true
+
+[dependencies]
+mrepo-model = { path = "../mrepo-model" }
+serde-prop = { git = "https://github.com/MRepoApp/serde-prop.git", tag = "v0.1.1" }
+
+anyhow = "1"
+chrono = { version = "0.4", default-features = false, features = ["now"] }
+git2 = { version = "0.19", optional = true }
+once_cell = "1"
+regex = "1"
+reqwest = { version = "0.12", features = [] }
+serde = { version = "1.0", default-features = false }
+serde_json = "1.0"
+tokio = { version = "1", features = [] }
+tracing = { version = "0.1", default-features = false, features = ["log"] }
+walkdir = "2"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+
+[features]
+default = []
+git = ["git2", "mrepo-model/git"]

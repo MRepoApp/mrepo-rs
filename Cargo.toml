@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+    "mrepo-cli",
+    "mrepo-core",
+    "mrepo-log",
+    "mrepo-model"
+]
+
+[workspace.package]
+license = "MIT OR Apache-2.0"
+edition = "2021"
