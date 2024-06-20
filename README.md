@@ -1,4 +1,16 @@
 # MRepo
+A modules manager for Magisk & KernelSU
+## Build
+```shell
+cargo install --git https://github.com/MRepoApp/mrepo-rs.git
+```
+
+## Build (with git)
+### Dependencies
+- OpenSSL 1.0.1 - 3.x.x (or LibreSSL 2.5 - 3.7.x)
+```shell
+cargo install --git https://github.com/MRepoApp/mrepo-rs.git --features git
+```
 
 ## Data structure
 ### json/config.json
