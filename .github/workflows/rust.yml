@@ -63,10 +63,3 @@ jobs:
 
       - name: Build (git)
         run: cargo build --package mrepo-cli --release --features git
-
-      - name: Upload (git)
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mrepo-git-${{ matrix.build }}
-          path: target/release/mrepo*
