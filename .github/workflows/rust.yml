@@ -11,8 +11,8 @@ env:
   RUST_BACKTRACE: 1
 
 jobs:
-  clippy:
-    name: Clippy
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,26 +24,24 @@ jobs:
       - name: Clippy
         run: cargo clippy
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
-
       - name: Test
         run: cargo test
 
   build:
-    name: Build on ${{ matrix.os }}
+    name: Build
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        build: [linux-x86_64, windows-x86_64, macos-x86_64, macos-aarch64]
+        include:
+          - build: linux-x86_64
+            os: ubuntu-latest
+          - build: windows-x86_64
+            os: windows-latest
+          - build: macos-x86_64
+            os: macos-latest-large
+          - build: macos-aarch64
+            os: macos-latest
 
     steps:
       - name: Checkout
@@ -55,6 +53,19 @@ jobs:
       - name: Build
         run: cargo build --package mrepo-cli --release
 
+      - name: Upload
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrepo-${{ matrix.build }}
+          path: target/release/mrepo*
+
       - name: Build (git)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: cargo build --package mrepo-cli --release --features git
+
+      - name: Upload (git)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrepo-git-${{ matrix.build }}
+          path: target/release/mrepo*
