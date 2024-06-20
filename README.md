@@ -1,5 +1,6 @@
 # MRepo
-A modules manager for Magisk & KernelSU
+A manager for building modules repository
+
 ## Build
 ```shell
 cargo install --git https://github.com/MRepoApp/mrepo-rs.git
@@ -13,7 +14,7 @@ cargo install --git https://github.com/MRepoApp/mrepo-rs.git --features git
 ```
 
 ## Data structure
-### json/config.json
+### config.json
 ```json
 {
   "log": {
@@ -56,7 +57,7 @@ cargo install --git https://github.com/MRepoApp/mrepo-rs.git --features git
 }
 ```
 
-### json/modules.json
+### modules.json
 ```json
 {
   "name": "Sanmer Magisk Repo (demo)",
@@ -95,7 +96,7 @@ cargo install --git https://github.com/MRepoApp/mrepo-rs.git --features git
 }
 ```
 
-### modules/zygisk_lsposed/track.json
+### track.json (internal)
 ```json
 {
   "module": {
