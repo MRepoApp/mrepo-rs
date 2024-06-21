@@ -13,7 +13,7 @@ pub struct Version {
     pub timestamp: i64,
     pub version: String,
     pub version_code: i64,
-    pub zip_path: String,
+    pub zip_file: String,
     pub changelog: String,
 }
 
@@ -23,8 +23,8 @@ impl Version {
             timestamp,
             version,
             version_code,
-            zip_path: format!("{timestamp}.zip"),
-            changelog: format!("{timestamp}.txt"),
+            zip_file: format!("{version_code}.zip"),
+            changelog: format!("{version_code}.md"),
         }
     }
 }

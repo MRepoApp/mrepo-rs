@@ -84,7 +84,7 @@ impl Update {
         let module_dir = self.modules_dir.join(&module.id);
 
         old.iter().for_each(|v| {
-            FileUtil::remove(module_dir.join(&v.zip_path));
+            FileUtil::remove(module_dir.join(&v.zip_file));
             FileUtil::remove(module_dir.join(&v.changelog));
         })
     }
@@ -99,7 +99,7 @@ impl Update {
                 tracing::error!(target: "Update::write_track", id = %module.id, ?error);
 
                 let version = &track.versions[0];
-                FileUtil::remove(module_dir.join(&version.zip_path));
+                FileUtil::remove(module_dir.join(&version.zip_file));
                 FileUtil::remove(module_dir.join(&version.changelog));
 
                 false
@@ -120,7 +120,7 @@ impl Update {
 
         let version = StrUtil::get_version_display(&module_new.version, module_new.version_code);
         let mut version = Version::new(timestamp, version, module_new.version_code);
-        FileUtil::rename(&zip_tmp, &module_dir.join(&version.zip_path));
+        FileUtil::rename(&zip_tmp, &module_dir.join(&version.zip_file));
 
         let changelog = module_dir.join(&version.changelog);
         let is_ok = Request::write_file(changelog_url, &changelog).await;

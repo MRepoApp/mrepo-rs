@@ -87,8 +87,8 @@ cargo install --git https://github.com/MRepoApp/mrepo-rs.git --features git
           "timestamp": 1697034252000,
           "version": "v1.9.2 (7024)",
           "version_code": 7024,
-          "zip_url": "https://demo-repo.sanmer.app/modules/zygisk_lsposed/1697034252000.zip",
-          "changelog": "https://demo-repo.sanmer.app/modules/zygisk_lsposed/1697034252000.txt"
+          "zip_url": "https://demo-repo.sanmer.app/modules/zygisk_lsposed/7024.zip",
+          "changelog": "https://demo-repo.sanmer.app/modules/zygisk_lsposed/7024.md"
         }
       ]
     }
@@ -112,8 +112,8 @@ cargo install --git https://github.com/MRepoApp/mrepo-rs.git --features git
       "timestamp": 1697034252000,
       "version": "v1.9.2 (7024)",
       "version_code": 7024,
-      "zip_path": "1697034252000.zip",
-      "changelog": "1697034252000.txt"
+      "zip_file": "7024.zip",
+      "changelog": "7024.md"
     }
   ]
 }

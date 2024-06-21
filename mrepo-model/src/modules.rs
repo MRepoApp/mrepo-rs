@@ -23,7 +23,7 @@ pub struct Module {
 }
 
 impl Module {
-    pub fn from(
+    pub fn build(
         origin: origin::Module,
         metadata: config::ModuleMetadata,
         versions: Vec<Version>,

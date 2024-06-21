@@ -35,7 +35,7 @@ impl Upgrade {
             timestamp: origin.timestamp,
             version: origin.version.to_owned(),
             version_code: origin.version_code,
-            zip_url: format!("{base_url}/{module_path}/{}", origin.zip_path),
+            zip_url: format!("{base_url}/{module_path}/{}", origin.zip_file),
             changelog: format!("{base_url}/{module_path}/{}", origin.changelog),
         }
     }
@@ -48,7 +48,7 @@ impl Upgrade {
             .map(|v| self.generate_version(&module.id, v))
             .collect();
 
-        modules::Module::from(track.module, origin.metadata.to_owned(), versions)
+        modules::Module::build(track.module, origin.metadata.to_owned(), versions)
     }
 
     pub fn generate_modules(&self, origins: &[Arc<Module>]) -> Vec<modules::Module> {
