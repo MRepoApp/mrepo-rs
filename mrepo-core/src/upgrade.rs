@@ -28,7 +28,7 @@ impl Upgrade {
     }
 
     fn generate_version(&self, id: &String, origin: &Version) -> modules::Version {
-        let module_dir = self.modules_dir.join(&id);
+        let module_dir = self.modules_dir.join(id);
         let base_url = &self.repository.setting.base_url;
         let module_path = format!("{}/{}", constant::MODULES_DIR, id);
         
