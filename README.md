@@ -7,6 +7,8 @@ cargo install --git https://github.com/MRepoApp/mrepo-rs.git
 ```
 
 ## Build (with git)
+> [!WARNING]
+> Unstable, only confirmed to work on MacOS
 ### Dependencies
 - OpenSSL 1.0.1 - 3.x.x (or LibreSSL 2.5 - 3.7.x)
 ```shell
