@@ -28,24 +28,38 @@ impl Upgrade {
     }
 
     fn generate_version(&self, id: &String, origin: &Version) -> modules::Version {
+        let module_dir = self.modules_dir.join(&id);
         let base_url = &self.repository.setting.base_url;
         let module_path = format!("{}/{}", constant::MODULES_DIR, id);
+        
+        let zip_file = module_dir.join(&origin.zip_file);
+        let zip_url = if zip_file.is_file() && zip_file.exists() {
+            format!("{base_url}/{module_path}/{}", origin.zip_file)
+        } else { 
+            String::new()
+        };
+        
+        let changelog = module_dir.join(&origin.changelog);
+        let changelog = if changelog.is_file() && changelog.exists() {
+            format!("{base_url}/{module_path}/{}", origin.changelog)
+        } else {
+            String::new()
+        };
 
         modules::Version {
             timestamp: origin.timestamp,
             version: origin.version.to_owned(),
             version_code: origin.version_code,
-            zip_url: format!("{base_url}/{module_path}/{}", origin.zip_file),
-            changelog: format!("{base_url}/{module_path}/{}", origin.changelog),
+            zip_url,
+            changelog,
         }
     }
 
     fn generate_module(&self, track: Track, origin: &Module) -> modules::Module {
-        let module = &track.module;
         let versions = track
             .versions
             .iter()
-            .map(|v| self.generate_version(&module.id, v))
+            .map(|v| self.generate_version(&origin.id, v))
             .collect();
 
         modules::Module::build(track.module, origin.metadata.to_owned(), versions)
@@ -56,12 +70,13 @@ impl Upgrade {
 
         for origin in origins {
             let module_dir = self.modules_dir.join(&origin.id);
-            if !module_dir.exists() {
+            let track_json = module_dir.join(constant::TRACK_JSON);
+            
+            if !track_json.exists() {
                 tracing::warn!(target: "Upgrade::generate_modules", id = %origin.id, "No track found");
                 continue;
             }
 
-            let track_json = module_dir.join(constant::TRACK_JSON);
             let track = match Track::from_file(&track_json) {
                 Ok(t) => t,
                 Err(error) => {
