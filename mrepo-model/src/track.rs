@@ -24,7 +24,7 @@ impl Version {
             version,
             version_code,
             zip_file: format!("{version_code}.zip"),
-            changelog: format!("{version_code}.txt"),
+            changelog: format!("{version_code}.md"),
         }
     }
 }
